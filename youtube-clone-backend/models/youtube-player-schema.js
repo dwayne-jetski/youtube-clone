@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Joi = require('joi');
 const { join } = require('path');
+const c = require('config');
 
 
 const replySchema = new mongoose.Schema({
@@ -19,19 +20,20 @@ const commentSchema = new mongoose.Schema({
     postDate: {type: Date, default: Date.now()},
 });
 
-const CommentSection = mongoose.model('', replySchema, commentSchema)
+const comments = mongoose.model('', replySchema, commentSchema)
 
 
-function validateCommentSection(product){
+function validateComments(product){
     const schema = Joi.object({
+        videoId: Joi.string().required(),
         likes: Joi.number(). default(),
         dislikes: Joi.number(). default(),
         text: Joi.string().required(),
         replies: Joi.string().required().default().number(),
     });
-    return schema.validate(CommentSection);
+    return schema.validate(comments);
 }
 
 exports.replySchema = replySchema;
 exports.validate;
-exports.CommentSection;
+exports.comments;
