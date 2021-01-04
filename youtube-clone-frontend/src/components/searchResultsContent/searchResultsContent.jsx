@@ -1,10 +1,10 @@
 import React from 'react';
 
 
-function DisplaySearchResults(){
+function DisplaySearchResults(props){
 
 return(
-    <h1>Hello World</h1>
+    <h1>Now Searching: {props.searchResult}</h1>
 )
 }
 

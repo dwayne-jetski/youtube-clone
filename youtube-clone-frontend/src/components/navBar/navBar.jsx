@@ -10,16 +10,18 @@ function NavBar(props){
 
 
     return(
+            <Navbar bg="dark" variant="dark">
+                <Navbar.Brand className='col-md-4'>Definitely Not Youtube</Navbar.Brand>
+                <Form inline className='search-bar col-md-6' onSubmit={props.handleSearch()}>
+                    <FormControl type="text" placeholder="Search" className="mr-sm-2" name='searchBarVal' onChange={props.handleSearchbarChange()} />
+                    <Button type='submit'>Search</Button> 
+                </Form>
+            </Navbar>
 
-        <Navbar bg="dark" variant="dark">
-            <Navbar.Brand className='col-md-4'>Definitely Not Youtube</Navbar.Brand>
-            <Form inline className='search-bar col-md-6' onSubmit={()=> props.handleSearchSubmit()}>
-                <FormControl type="text" placeholder="Search" className="mr-sm-2" name='searchBarVal' onChange={props.handleSearchbarChange()} />
-                <Button type='submit' value='Submit'></Button> 
-            </Form>
-        </Navbar>
+        
     )
 }
+
 
 
 export default NavBar;
