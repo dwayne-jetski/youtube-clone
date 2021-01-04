@@ -1,16 +1,29 @@
 {
-  "name": "youtube-clone-backend",
+  "name": "youtube-clone",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marcus-baumgardner/youtube-clone.git"
   },
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marcus-baumgardner/youtube-clone/issues"
+  },
+  "homepage": "https://github.com/marcus-baumgardner/youtube-clone#readme",
   "dependencies": {
     "config": "^3.3.3",
-    "mongoose": "^5.11.8"
+    "joi": "^17.3.0",
+    "mongoose": "^5.11.8",
+    "node": "^15.4.0",
+    "nodemon": "^2.0.6"
   }
 }

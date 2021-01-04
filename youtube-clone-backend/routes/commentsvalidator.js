@@ -12,7 +12,20 @@ router.get('/:id', async (req, res) => {
     } catch (ex){
         return res.status(500).send(`Internal Server Error: ${ex}`);
     }
+});
+
+router.get('/', async (req, res) => {
+    try{
+        const videoComments = await comments.findAll();
+
+        if(!comments)
+        return res.status(400).send(`The comment with id "${req.params}" does not exist.`);
+        return res.send(videoComments);
+    } catch (ex){
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
 }
+);
 
 router.post('/', async (req, res) => {
     try{
