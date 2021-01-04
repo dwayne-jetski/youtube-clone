@@ -1,13 +1,7 @@
-const connectDB = require ('./startup/db');
-const express = require('express');
-const app = express();
+const mongoose = require('mongoose');
 
-connectDB();
-
-app.use(express.json());
-
-
-const port = process.env.PORT || 5000;
-    app.listen(port, () => {
-    console.log(`Server started on port: ${port}`);
-});
+mongoose
+.connect("mongodb+srv://oyasumimizi:blackpink@cluster0.tazvv.mongodb.net/Cluster0?retryWrites=true&w=majority",
+    { useNewUrlParser: true, useUnifiedTopology: true })
+ .then(() => console.log('Connected to MongoDB...'))
+ .catch((err) => console.log(`Could not connect to MongoDB. ERROR: ${err}`));
