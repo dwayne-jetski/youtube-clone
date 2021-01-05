@@ -6,11 +6,7 @@ import youtube from '../../api/youtube';
 
 function HomePageContent(props){
 
-    const fetchData = async () => {
-
-        const response = await youtube.get
-       
-    }
+  
 
 
     return(
