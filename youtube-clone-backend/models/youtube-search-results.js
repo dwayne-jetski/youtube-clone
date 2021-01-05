@@ -12,7 +12,7 @@ const searchResultsSchema = new mongoose.Schema({
     channelName: {type: String, required: true},
 });
 
-function validateSearchResults(product){
+function validateSearchResults(searchResults){
     const schema = Joi.object({
         videoId: Joi.string().required(),
         views: Joi.number().default(),

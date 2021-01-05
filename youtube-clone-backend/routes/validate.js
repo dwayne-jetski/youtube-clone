@@ -1,5 +1,6 @@
 const {comments, validate} = require('../models/youtube-player-schema');
 const express = require('express');
+const { required } = require('joi');
 const router = express.Router();
 
 router.get('/:id', async (req, res) => {
@@ -38,7 +39,6 @@ router.post('/', async (req, res) => {
             likes: req.body.likes,
             dislikes: req.body.dislikes,
             text: req.body.text,
-            replies: req.body.replies,
         });
 
 await comments.save();
@@ -61,7 +61,6 @@ router.put('/:id', async (req, res) => {
                 likes: req.body.likes,
                 dislikes: req.body.dislikes,
                 text: req.body.text,
-                replies: req.body.replies,
             },
             {new: true}
         );
@@ -90,6 +89,20 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
+router.get('/like/:id', async (req, res) => {
+    comments.findOneAndUpdate({
+        _id: req.params.id, 
+        { $inc: { like : 1 }},
+        {new: false})
+    });
+}
+router.get('/dislike/:id', async (req, res) => {
+    comments.findOneAndUpdate({
+        _id: req.params.id,
+        { $inc: { like: -1 }},
+        {new: false})
+    });
+}
 
 module.exports = router;
 
