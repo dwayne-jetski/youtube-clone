@@ -20,7 +20,7 @@ const commentSchema = new mongoose.Schema({
     postDate: {type: Date, default: Date.now()},
 });
 
-const comments = mongoose.model('', replySchema, commentSchema)
+// const comments = mongoose.model(comments, replySchema, commentSchema)
 
 
 function validateComments(product){
