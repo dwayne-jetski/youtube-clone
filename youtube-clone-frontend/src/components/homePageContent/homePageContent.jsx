@@ -1,9 +1,16 @@
 import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import youtube from '../../api/youtube';
 
 
 function HomePageContent(props){
+
+    const fetchData = async () => {
+
+        const response = await youtube.get
+       
+    }
 
 
     return(
@@ -15,7 +22,7 @@ function HomePageContent(props){
                 <Row>
                     <Row>
                         <Col>
-                            <h1>Recommended Content</h1>
+                            <h1>{props.searchBar}</h1>
                         </Col>
                     </Row>
                 </Row>
@@ -23,16 +30,16 @@ function HomePageContent(props){
                     
                     <Row>
                         <Col>
-                            
+                            {/* Video goes here */}
                         </Col>
                         <Col>
-                            
+                            {/* Video goes here */}
                         </Col>
                         <Col>
-                            
+                            {/* Video goes here */}
                         </Col>
                         <Col>
-                            
+                            {/* Video goes here */}
                         </Col>
 
                     </Row>
@@ -48,16 +55,16 @@ function HomePageContent(props){
                     
                     <Row>
                         <Col>
-                            
+                            {/* Video goes here */}
                         </Col>
                         <Col>
-                            
+                            {/* Video goes here */}
                         </Col>
                         <Col>
-                            
+                            {/* Video goes here */}
                         </Col>
                         <Col>
-                            
+                            {/* Video goes here */}
                         </Col>
 
                     </Row>
@@ -73,16 +80,16 @@ function HomePageContent(props){
                     
                     <Row>
                         <Col>
-                            
+                            {/* Video goes here */}  
                         </Col>
                         <Col>
-                            
+                            {/* Video goes here */}
                         </Col>
                         <Col>
-                            
+                            {/* Video goes here */}
                         </Col>
                         <Col>
-                            
+                            {/* Video goes here */}
                         </Col>
 
                     </Row>

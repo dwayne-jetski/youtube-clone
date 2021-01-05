@@ -18,11 +18,13 @@ class App extends React.Component {
       viewingVideoPlayer: false,
       searchBarVal: '',
       searchTerm: '',
+      searchCollection: []
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     
   }
+
 
   handleChange(event){
       
@@ -35,25 +37,34 @@ class App extends React.Component {
   handleSubmit = async (event)=>{
 
     event.preventDefault();
+
+    if(this.state.searchBarVal.length<1){
+      return
+    }
+
     console.log('handle request')
+
+
+    const response = await youtube.get('search', {
+      params: {
+        part: 'snippet',
+        maxResults: 15,
+        key: 'AIzaSyAf1AqBRPpPuTaZruy5z971niRJkDnoj4I',
+        q: this.state.searchBarVal
+      }
+    });
 
     this.setState({
       viewingHomePage: false,
       viewingSearchResults: true,
       viewingVideoPlayer: false,
-      searchTerm: this.state.searchBarVal,
-    })
-
-    const response = await youtube.get('search', {
-      params: {
-        part: 'snippet',
-        maxResults: 5,
-        key: 'AIzaSyBsU5PWYl_AesH3un5GvQ3gMu-3IZkpsxE',
-        q: this.state.searchTerm
-      }
     })
     
-    console.log(response)
+    this.setState({
+      searchCollection: response.data.items
+    });
+
+    console.log(response);
 
   }
 
@@ -68,6 +79,8 @@ class App extends React.Component {
     console.log('viewing video player?: ', this.state.viewingVideoPlayer);
     console.log('Search Bar Value: ', this.state.searchBarVal);
     console.log('Search Term: ', this.state.searchTerm);
+    console.log('Search Collection: ', this.state.searchCollection);
+    console.log('Search Collection Length: ', this.state.searchCollection.length);
 
     if(this.state.viewingHomePage === true && this.state.viewingSearchResults === false && this.state.viewingVideoPlayer === false){
       return(
@@ -83,7 +96,10 @@ class App extends React.Component {
       return(
         <React.Fragment>
           <NavBar handleSearchbarChange={()=> this.handleChange} handleSearch={()=>this.handleSubmit}/>
-          <DisplaySearchResults searchResult={this.state.searchBarVal}/>
+          <DisplaySearchResults 
+          searchResult={this.state.searchBarVal} 
+          collection={this.state.searchCollection}
+          searchingFor={this.state.searchBarVal}/>
         </React.Fragment>
       )
     } else if(this.state.viewingHomePage === false && this.state.viewingSearchResults === false && this.state.viewingVideoPlayer === true){
