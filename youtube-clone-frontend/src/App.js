@@ -25,6 +25,7 @@ class App extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.selectVideo = this.selectVideo.bind(this);
+    this.returnHome = this.returnHome.bind(this);
     
   }
 
@@ -42,6 +43,15 @@ class App extends React.Component {
     })
   }
 
+  returnHome(event){
+    event.preventDefault();
+    
+    this.setState({
+      viewingHomePage: true,
+      viewingSearchResults: false,
+      viewingVideoPlayer: false
+    })
+  }
 
   handleChange(event){
       
@@ -106,14 +116,18 @@ class App extends React.Component {
           <NavBar 
           handleSearchbarChange={()=> this.handleChange} 
           handleSearch={()=>this.handleSubmit}
-          searchBar={this.state.searchBarVal}/>
+          searchBar={this.state.searchBarVal}
+          returnHome={()=> this.returnHome}/>
           <HomePageContent/>
         </React.Fragment>
       )
     } else if(this.state.viewingHomePage === false && this.state.viewingSearchResults === true && this.state.viewingVideoPlayer === false){
       return(
         <React.Fragment>
-          <NavBar handleSearchbarChange={()=> this.handleChange} handleSearch={()=>this.handleSubmit}/>
+          <NavBar 
+          handleSearchbarChange={()=> this.handleChange} 
+          handleSearch={()=>this.handleSubmit}
+          returnHome={()=> this.returnHome}/>
           <DisplaySearchResults 
           searchResult={this.state.searchBarVal} 
           collection={this.state.searchCollection}
@@ -126,7 +140,8 @@ class App extends React.Component {
         <React.Fragment>
           <NavBar 
           handleSearchbarChange={()=> this.handleChange} 
-          handleSearch={()=>this.handleSubmit}/>
+          handleSearch={()=>this.handleSubmit}
+          returnHome={()=> this.returnHome}/>
           <VideoPlayer selectAVideo = {()=>this.selectVideo} selectedVideo={this.state.selectedVideo}/>
         </React.Fragment>
       )
