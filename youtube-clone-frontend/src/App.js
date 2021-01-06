@@ -20,26 +20,40 @@ class App extends React.Component {
       searchBarVal: '',
       searchTerm: '',
       searchCollection: [],
-      selectedVideo: ''
+      selectedVideo: '',
+      relatedVideo: ``,
+      comments: [],
+      newCommentBody: ''
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.selectVideo = this.selectVideo.bind(this);
     this.returnHome = this.returnHome.bind(this);
+    this.handleCommentSubmit= this.handleCommentSubmit.bind(this);
     
   }
 
-  selectVideo(event){
+  selectVideo = async (event)=>{
     event.preventDefault();
 
     let nam = event.target.name;
     let id = event.target.id;
+    const response = await youtube.get('search', {
+      params: {
+        part: 'snippet',
+        maxResults: 15,
+        key: 'AIzaSyAf1AqBRPpPuTaZruy5z971niRJkDnoj4I',
+        
+      }
+    });
 
     this.setState({
       [nam]: id,
       viewingHomePage: false,
       viewingSearchResults: false,
-      viewingVideoPlayer: true
+      viewingVideoPlayer: true,
+      relatedVideo: response
+      
     })
   }
 
@@ -58,6 +72,14 @@ class App extends React.Component {
     let nam = event.target.name;
     let val = event.target.value;
     this.setState({[nam]: val});
+
+  }
+
+  handleCommentSubmit(event){
+
+    event.preventDefault();
+
+    
 
   }
 
@@ -108,7 +130,8 @@ class App extends React.Component {
     console.log('Search Term: ', this.state.searchTerm);
     console.log('Search Collection: ', this.state.searchCollection);
     console.log('Search Collection Length: ', this.state.searchCollection.length);
-    console.log('Selected Video: ', this.state.selectedVideo)
+    console.log('Selected Video: ', this.state.selectedVideo);
+    console.log('New Comment Body: ', this.state.newCommentBody);
 
     if(this.state.viewingHomePage === true && this.state.viewingSearchResults === false && this.state.viewingVideoPlayer === false){
       return(
@@ -142,7 +165,14 @@ class App extends React.Component {
           handleSearchbarChange={()=> this.handleChange} 
           handleSearch={()=>this.handleSubmit}
           returnHome={()=> this.returnHome}/>
-          <VideoPlayer selectAVideo = {()=>this.selectVideo} selectedVideo={this.state.selectedVideo}/>
+          <VideoPlayer 
+          selectAVideo = {()=>this.selectVideo} 
+          selectedVideo={this.state.selectedVideo}
+          commentList = {this.state.comments}
+          newCommentBody = {this.state.newCommentBody}
+          handleCommentChange={()=> this.handleChange} 
+          handleSubmit={()=>this.handleCommentSubmit}
+          />
         </React.Fragment>
       )
     }

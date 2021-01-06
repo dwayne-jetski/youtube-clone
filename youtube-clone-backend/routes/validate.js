@@ -92,17 +92,17 @@ router.delete('/:id', async (req, res) => {
 router.get('/like/:id', async (req, res) => {
     comments.findOneAndUpdate({
         _id: req.params.id, 
-        { $inc: { like : 1 }},
+         $inc: { like : 1 }},
         {new: false})
     });
-}
+
 router.get('/dislike/:id', async (req, res) => {
     comments.findOneAndUpdate({
         _id: req.params.id,
-        { $inc: { like: -1 }},
+         $inc: { like: -1 }},
         {new: false})
     });
-}
+
 
 module.exports = router;
 

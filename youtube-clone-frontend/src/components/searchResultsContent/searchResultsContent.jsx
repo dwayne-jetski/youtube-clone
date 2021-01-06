@@ -24,9 +24,6 @@ const createSearchResults = (props)=>{
                 <Row>
                     <Img src={snippet.thumbnails.medium.url} width={snippet.thumbnails.medium.width} height={snippet.thumbnails.medium.height} name='selectedVideo' id={id.videoId} onClick={props.selectAVideo()}/>
                 </Row>
-                {/* <Row>
-                   <iframe src={`http://www.youtube.com/embed/${id.videoId}`}/>
-                </Row> */}
                 <Row>
                     Channel:  {snippet.channelTitle}
                 </Row>
