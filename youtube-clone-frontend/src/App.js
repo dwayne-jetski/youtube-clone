@@ -22,7 +22,7 @@ class App extends React.Component {
       searchCollection: [],
       selectedVideo: '',
       relatedVideo: ``,
-      comments: [],
+      comments: null,
       newCommentBody: ''
     }
     this.handleChange = this.handleChange.bind(this);
@@ -42,18 +42,26 @@ class App extends React.Component {
       params: {
         part: 'snippet',
         maxResults: 15,
-        key: 'AIzaSyAf1AqBRPpPuTaZruy5z971niRJkDnoj4I',
+        relatedVideo: null,
+        key: 'AIzaSyDG-7aya2AjiTl6Rns68VAgBHm3K3P0PRE',
         
       }
     });
+
+    const video = this.state.selectedVideo;
+    const comments = await axios.get('http://localhost:5000/api/comments/', {
+      params: {
+        videoId: video
+      }
+    })
 
     this.setState({
       [nam]: id,
       viewingHomePage: false,
       viewingSearchResults: false,
       viewingVideoPlayer: true,
-      relatedVideo: response
-      
+      relatedVideo: response,
+      comments: comments
     })
   }
 
@@ -75,11 +83,19 @@ class App extends React.Component {
 
   }
 
-  handleCommentSubmit(event){
+  handleCommentSubmit = async (event)=>{
 
     event.preventDefault();
 
-    
+    const comment = {
+      videoId: this.state.selectedVideo,
+      text: this.state.newCommentBody,
+    }
+
+    axios.post('http://localhost:5000/api/comments/', comment)
+    .then(res => {
+      console.log(res);
+    });
 
   }
 
@@ -117,7 +133,9 @@ class App extends React.Component {
 
   }
 
+  getCommentsByVideo(){
 
+  }
   
 
 
@@ -132,6 +150,7 @@ class App extends React.Component {
     console.log('Search Collection Length: ', this.state.searchCollection.length);
     console.log('Selected Video: ', this.state.selectedVideo);
     console.log('New Comment Body: ', this.state.newCommentBody);
+    console.log('Comment Data: ', this.state.comments)
 
     if(this.state.viewingHomePage === true && this.state.viewingSearchResults === false && this.state.viewingVideoPlayer === false){
       return(
