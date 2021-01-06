@@ -26,15 +26,12 @@ const replies = mongoose.model('replies', replySchema)
 function validateComments(comments){
     const schema = Joi.object({
         videoId: Joi.string().required(),
-        likes: Joi.number(). default(),
-        dislikes: Joi.number(). default(),
         text: Joi.string().required(),
-        replies: Joi.string().required().default().number(),
     });
     return schema.validate(comments);
 }
 
 exports.replySchema = replySchema;
-exports.validate;
-exports.comments;
-exports.replies;
+exports.comments = comments;
+exports.replies = replies;
+exports.validateComments = validateComments;

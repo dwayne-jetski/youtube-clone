@@ -1,4 +1,4 @@
-const {comments, validate} = require('../models/youtube-player-schema');
+const {comments, validateComments, replies} = require('../models/youtube-player-schema');
 const express = require('express');
 const { required } = require('joi');
 const router = express.Router();
@@ -17,7 +17,7 @@ router.get('/:id', async (req, res) => {
 
 router.get('/', async (req, res) => {
     try{
-        const videoComments = await comments.findAll();
+        const videoComments = await comments.find();
 
         if(!comments)
         return res.status(400).send(`The comment with id "${req.params}" does not exist.`);
@@ -30,7 +30,7 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try{
-        const { error } = validate(req.body);
+        const { error } = validateComments(req.body);
         if(error)
             return res.status(400).send(error);
 
@@ -45,13 +45,14 @@ await comments.save();
 
 return res.send(comments);
 } catch(ex){
+    console.log(ex);
  return res.status(500).send(`Internal Server Error: ${ex}`);
 }
 });
 
 router.put('/:id', async (req, res) => {
     try{
-        const{ error } = validate(req.body);
+        const{ error } = validateComments(req.body);
         if(error) return res.status(400).send(error);
 
         const comments = await comments.findByIdAndUpdate(
@@ -92,17 +93,16 @@ router.delete('/:id', async (req, res) => {
 router.get('/like/:id', async (req, res) => {
     comments.findOneAndUpdate({
         _id: req.params.id, 
-        { $inc: { like : 1 }},
+        $inc: { like : 1 }},
         {new: false})
     });
-}
+
 router.get('/dislike/:id', async (req, res) => {
     comments.findOneAndUpdate({
         _id: req.params.id,
-        { $inc: { like: -1 }},
+        $inc: { like: -1 }},
         {new: false})
     });
-}
 
 module.exports = router;
 

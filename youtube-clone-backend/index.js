@@ -11,7 +11,7 @@ mongoose
 
 
 app.use(express.json());
-app.use('/api/validate', validate);
+app.use('/api/comments', validate);
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
