@@ -93,27 +93,16 @@ router.delete('/:id', async (req, res) => {
 router.get('/like/:id', async (req, res) => {
     comments.findOneAndUpdate({
         _id: req.params.id, 
-<<<<<<< HEAD
          $inc: { like : 1 }},
-=======
-        $inc: { like : 1 }},
->>>>>>> 87482625603d55557b66dc1abd79e8fb8ea78988
         {new: false})
     });
 
 router.get('/dislike/:id', async (req, res) => {
     comments.findOneAndUpdate({
         _id: req.params.id,
-<<<<<<< HEAD
          $inc: { like: -1 }},
         {new: false})
     });
-
-=======
-        $inc: { like: -1 }},
-        {new: false})
-    });
->>>>>>> 87482625603d55557b66dc1abd79e8fb8ea78988
 
 module.exports = router;
 

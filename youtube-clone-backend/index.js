@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
-const express = require('express')
+const express = require('express');
 const app = express();
+const cors = require('cors');
 const validate = require('./routes/validate');
 
 mongoose
@@ -9,7 +10,7 @@ mongoose
  .then(() => console.log('Connected to MongoDB...'))
  .catch((err) => console.log(`Could not connect to MongoDB. ERROR: ${err}`));
 
-
+app.use(cors());
 app.use(express.json());
 app.use('/api/comments', validate);
 
