@@ -1,19 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button'
 import Image from 'react-bootstrap/Image'
+import axios from 'axios';
 
+function BuildComments(props){
 
-function buildComments(props){
+    const [comments, setComments] = useState(null); 
 
-    console.log("props.commentList: ", props.commentList.data)
-    let comments = [];
-    comments = props.commentList.data
+    if(comments === null){
+        axios.get('http://localhost:5000/api/comments/' + props.selectedVideo).then(response=>{
+            console.log('RESPONSE: ', response)
+            setComments(response.data);
+        }).catch((ex)=>{console.log(ex)});
+    }
+    let subComments = [];
+    console.log("hook comments: ", comments);
+    let commentSection = [<div></div>];
 
-    let commentSection = comments.map((commentList, index)=>{
+    if(comments !== null)
+    { commentSection = comments.map((commentList, index)=>{
         
-        const { id, likes, dislikes, text, replies, postDate } = commentList
+        const { id, videoId,  likes, dislikes, text, replies, postDate } = commentList
 
         
         return(
@@ -26,14 +35,12 @@ function buildComments(props){
                                 Anonymous
                             </Row>
                             <Row className="border border-dark">
-                                Picture    
-                                    <br/>
-                                    <br/>
-                                    <br/>
-                                Picture
                             </Row>
                         </Col>
-                        <Col xs={8} >    
+                        <Col xs={3}>
+
+                        </Col>
+                        <Col xs={6} >    
                             {text}
                         </Col>
                     </Row>
@@ -52,14 +59,14 @@ function buildComments(props){
                         <Col sm={3}>
                         </Col>
                         <Col sm={9}>
-                            {buildComments(replies)}
+                            {/* {BuildComments(replies)} */}
                         </Col>    
                     </Row>
                 </Col>
             </div>
         )
     })
-   
+   }
     return(
         commentSection
     )
@@ -67,4 +74,4 @@ function buildComments(props){
     
 }
 
-export default buildComments;
+export default BuildComments;

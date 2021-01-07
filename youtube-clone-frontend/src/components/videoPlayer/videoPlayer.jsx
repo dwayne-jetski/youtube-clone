@@ -1,8 +1,9 @@
 import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import buildComments from '../displayComments/comments'
+import BuildComments from '../displayComments/comments'
 import newComment from '../newComment/newComment'
+import searchResultsContent from '../searchResultsContent/searchResultsContent'
 
 
 function VideoPlayer(props){
@@ -36,7 +37,7 @@ function VideoPlayer(props){
                         <Row>
                             <Col>
                                 <Row>
-                                    {buildComments(props)}
+                                    <BuildComments selectedVideo={props.selectedVideo} />
                                 </Row>
                             </Col>
                         </Row>
@@ -44,7 +45,7 @@ function VideoPlayer(props){
                     
                 </Col>
                 <Col xs={3}>
-                    {/* Recommended Content goes Here */}
+                    <searchResultsContent />
                 </Col>
             </Row>
         </div>

@@ -22,7 +22,7 @@ class App extends React.Component {
       searchCollection: [],
       selectedVideo: '',
       relatedVideo: ``,
-      comments: null,
+      comments: [],
       newCommentBody: ''
     }
     this.handleChange = this.handleChange.bind(this);
@@ -43,26 +43,21 @@ class App extends React.Component {
         part: 'snippet',
         maxResults: 15,
         relatedVideo: null,
-        key: 'AIzaSyDG-7aya2AjiTl6Rns68VAgBHm3K3P0PRE',
+        key: 'AIzaSyDPFtKRXuxscC8cjE1JQucpp6CdTil-J88',
         
       }
     });
 
-    const video = this.state.selectedVideo;
-    const comments = await axios.get('http://localhost:5000/api/comments/', {
-      params: {
-        videoId: video
-      }
-    })
-
+    
     this.setState({
       [nam]: id,
       viewingHomePage: false,
       viewingSearchResults: false,
       viewingVideoPlayer: true,
       relatedVideo: response,
-      comments: comments
     })
+
+    
   }
 
   returnHome(event){
@@ -187,7 +182,6 @@ class App extends React.Component {
           <VideoPlayer 
           selectAVideo = {()=>this.selectVideo} 
           selectedVideo={this.state.selectedVideo}
-          commentList = {this.state.comments}
           newCommentBody = {this.state.newCommentBody}
           handleCommentChange={()=> this.handleChange} 
           handleSubmit={()=>this.handleCommentSubmit}

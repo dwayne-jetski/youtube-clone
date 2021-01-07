@@ -5,8 +5,8 @@ const router = express.Router();
 
 router.get('/:id', async (req, res) => {
     try{
-        const videoComments = await comments.findById(req.params.id);
-
+        const videoComments = await comments.find({videoId: req.params.id});
+        console.log(videoComments)
         if(!videoComments)
         return res.status(400).send(`The comment with id "${req.params.id}" does not exist.`);
         return res.send(videoComments);
@@ -18,7 +18,7 @@ router.get('/:id', async (req, res) => {
 router.get('/', async (req, res) => {
     try{
         const videoComments = await comments.find();
-
+        console.log(videoComments)
         if(!videoComments)
         return res.status(400).send(`The comment with id "${req.params}" does not exist.`);
         return res.send(videoComments);
