@@ -1,4 +1,4 @@
-const {comments, validateComments, replies} = require('../models/youtube-player-schema');
+const {comments, validateComments, replies, validateReplies} = require('../models/youtube-player-schema');
 const express = require('express');
 const { required } = require('joi');
 const router = express.Router();
@@ -38,6 +38,7 @@ router.post('/', async (req, res) => {
             videoId: req.body.videoId,
             text: req.body.text,
         });
+        console.log(req.body);
 
 await comment.save();
 
@@ -100,5 +101,95 @@ router.get('/dislike/:id', async (req, res) => {
         {new: false})
     });
 
+//replies endpoint
+// router.get('/:id', async (req, res) => {
+//     try{
+//         const videoReplies = await replies.find({commentId: req.params.id});
+//         console.log(videoReplies)
+//         if(!videoReplies)
+//         return res.status(400).send(`The comment with id "${req.params.id}" does not exist.`);
+//         return res.send(videoReplies);
+//     } catch (ex){
+//         return res.status(500).send(`Internal Server Error: ${ex}`);
+//     }
+// });
+
+// router.get('/', async (req, res) => {
+//     try{
+//         const videoReplies = await replies.find();
+//         console.log(videoReplies)
+//         if(!videoReplies)
+//         return res.status(400).send(`The comment with id "${req.params}" does not exist.`);
+//         return res.send(videoReplies);
+//     } catch (ex){
+//         return res.status(500).send(`Internal Server Error: ${ex}`);
+//     }
+// }
+// );
+
+router.post('/replies/', async (req, res) => {
+    try{
+        const { error } = validateReplies(req.body);
+        if(error){
+        console.log(error)
+                    return res.status(400).send(error);
+    }     
+        const comment = comments.findById(req.body.commentId);
+        if(!comment){
+        return res.status(400).send(`The comment with id "${req.params.id}" does not exist.`);
+    }        
+        const reply = new replies({
+            commentId: req.body.commentId,
+            text: req.body.text,
+        });
+    
+await reply.save();
+
+return res.send(reply);
+} catch(ex){
+    console.log(ex);
+ return res.status(500).send(`Internal Server Error: ${ex}`);
+}
+});
+
+router.put('/replies/:id', async (req, res) => {
+
+    try{
+        const{ error } = validateReplies(req.body);
+        if(error) return res.status(400).send(error);
+
+        const reply = await replies.findByIdAndUpdate(
+            req.params.id,
+            {
+                commentId: req.body.commentId,
+                text: req.body.text,
+            },
+            {new: true}
+        );
+        if (!reply)
+            return res.status(400).send(`The comment with id "${req.params.id}" does not exist.`);
+
+            await reply.save();
+
+            return res.send(reply);
+          } catch(ex) {
+              return res.status(500).send(`Internal Server Error: ${ex}`);
+          }
+});
+
+router.delete('/replies/:id', async (req, res) => {
+    try{
+
+        const reply = await replies.findByIdAndRemove(req.params.id);
+
+        if (!reply)
+            return res.status(400).send(`The comment with id "${req.params.id}" does not exist.`);
+
+        return res.send(reply);
+    } catch(ex){
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+});
+    
 module.exports = router;
 

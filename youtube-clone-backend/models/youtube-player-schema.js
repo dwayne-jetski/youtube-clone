@@ -5,6 +5,7 @@ const config = require('config');
 
 
 const replySchema = new mongoose.Schema({
+    commentId: {type: String, required: true},
     likes: {type: Number, default: 0},
     dislikes: {type: Number, default: 0},
     text: {type: String, required: true},
@@ -31,7 +32,17 @@ function validateComments(comments){
     return schema.validate(comments);
 }
 
+//replies endpoint 
+function validateReplies(replies){
+    const schema = Joi.object({
+        commentId: Joi.string().required(),
+        text: Joi.string().required(),
+    });
+    return schema.validate(replies);
+}
+
 exports.replySchema = replySchema;
 exports.comments = comments;
 exports.replies = replies;
 exports.validateComments = validateComments;
+exports.validateReplies = validateReplies;

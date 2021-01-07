@@ -22,5 +22,7 @@ function validateSearchResults(searchResults){
     return schema.validate(searchResults);
 }
 
+
+
 exports.validate;
 exports.searchResults;
