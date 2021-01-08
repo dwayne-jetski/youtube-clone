@@ -88,19 +88,24 @@ router.delete('/:id', async (req, res) => {
 });
 
 router.get('/like/:id', async (req, res) => {
-    comments.findOneAndUpdate({
-        _id: req.params.id, 
-         $inc: { like : 1 }},
-        {new: false})
+    const updatedLike = await comments.findOneAndUpdate({
+        _id: req.params.id
+    },
+    {
+        $inc: {likes: 1}
+    });
+        return res.send(updatedLike);
     });
 
 router.get('/dislike/:id', async (req, res) => {
-    comments.findOneAndUpdate({
-        _id: req.params.id,
-        $inc: { like: -1 }},
-        {new: false})
+    const updatedLike = await comments.findOneAndUpdate({
+        _id: req.params.id
+    },
+    {
+        $inc: {dislikes: 1}
     });
-
+        return res.send(updatedLike);
+    });
 //replies endpoint
 // router.get('/:id', async (req, res) => {
 //     try{

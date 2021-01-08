@@ -3,7 +3,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import BuildComments from '../displayComments/comments'
 import newComment from '../newComment/newComment'
-import searchResultsContent from '../searchResultsContent/searchResultsContent'
+import createSearchResults from '../searchResultsContent/searchResultsContent'
 
 
 function VideoPlayer(props){
@@ -13,14 +13,14 @@ function VideoPlayer(props){
     return(
         <div>
             <Row>
-                <h1></h1>
+                <h1>{props.videoTitle}</h1>
             </Row>
             <Row>
-                <Col xs={3}>
+                <Col xs={4}>
                 </Col>
-                <Col xs={8}>
+                <Col xs={5}>
                     <Row>
-                    <iframe width="560" height="315" src={currentlyPlaying} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe title={currentlyPlaying} width="560" height="315" src={currentlyPlaying} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                        
                     </Row>
                     <Col xs={7}>
@@ -37,7 +37,10 @@ function VideoPlayer(props){
                         <Row>
                             <Col>
                                 <Row>
-                                    <BuildComments selectedVideo={props.selectedVideo} />
+                                    <BuildComments 
+                                    selectedVideo={props.selectedVideo} 
+                                    handleLikeSubmit={props.handleLikeSubmit} 
+                                    handleDislikeSubmit={props.handleDislikeSubmit} />
                                 </Row>
                             </Col>
                         </Row>
@@ -45,7 +48,9 @@ function VideoPlayer(props){
                     
                 </Col>
                 <Col xs={3}>
-                    <searchResultsContent />
+
+                    {createSearchResults(props)}    
+                
                 </Col>
             </Row>
         </div>
