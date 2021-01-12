@@ -30,8 +30,7 @@ class App extends React.Component {
       likes: 0,
       dislikes: 0,
       commentId: '',
-      count: 0,
-      reply: false
+      description: ''
 
     }
     this.handleChange = this.handleChange.bind(this);
@@ -62,9 +61,17 @@ class App extends React.Component {
 
     let nam = event.target.name;
     let id = event.target.id;
-    let title = event.target.title;
-    console.log('HERE IS THE TITLE OF THE VIDEO!: ', title)
-    
+    let videoTitle = event.target.getAttribute('title');
+    let description = event.target.getAttribute('description');
+
+    console.log('----selectVideo content-----')
+    console.log('HERE IS THE TITLE OF THE VIDEO!: ', videoTitle)
+    console.log('ID: ', id)
+    console.log('Description: ', description);
+    console.log('----selectVideo content-----')
+
+
+
     console.log("Video ID Going Into SetComments(): ", id)
     this.setComments(id);
 
@@ -84,7 +91,8 @@ class App extends React.Component {
       viewingSearchResults: false,
       viewingVideoPlayer: true,
       relatedVideo: response,
-      selectedVideoTitle: title
+      selectedVideoTitle: videoTitle,
+      description: description
       
     })
    
@@ -258,7 +266,8 @@ class App extends React.Component {
     console.log('Dislikes: ', this.state.dislikes);
     console.log('Likes: ', this.state.likes);
     console.log('APP.JS Comment ID: ', this.state.commentId);
-    console.log('---------------next state-----------------------')
+    console.log('Description: ', this.state.description);
+    console.log('---------------next state-----------------------');
 
     
 
@@ -300,6 +309,7 @@ class App extends React.Component {
           
           <VideoPlayer 
           count={this.state.count}
+          description={this.state.description}
           videoTitle={this.state.selectedVideoTitle}
           searchResult={this.state.searchBarVal} 
           collection={this.state.searchCollection}

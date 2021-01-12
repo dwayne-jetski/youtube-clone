@@ -17,15 +17,23 @@ const createSearchResults = (props)=>{
         }
         return(
             <div className="border-bottom border-dark">
-                <Row>
-                    Title: {snippet.title}
-                </Row>
-                <Row>
-                    <Img src={snippet.thumbnails.medium.url} width={snippet.thumbnails.medium.width} height={snippet.thumbnails.medium.height} name='selectedVideo' id={id.videoId} value={snippet.title} onClick={props.selectAVideo()}/>
-                </Row>
-                <Row>
-                    Channel:  {snippet.channelTitle}
-                </Row>
+                <Col>
+                    <Row>
+                        Title: {snippet.title}
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Img src={snippet.thumbnails.medium.url} width={snippet.thumbnails.medium.width} height={snippet.thumbnails.medium.height} name='selectedVideo' id={id.videoId} value={snippet.title} title={snippet.title} description={snippet.description} onClick={props.selectAVideo()}/>
+                        </Col>
+                        <Col>
+                            Description: {snippet.description}
+                        </Col>
+                    </Row>
+                    <Row>
+                        Channel:  {snippet.channelTitle}
+                    </Row>
+                </Col>
+                
             </div>
         )
 

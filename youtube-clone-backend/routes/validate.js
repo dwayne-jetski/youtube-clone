@@ -132,7 +132,7 @@ router.get('/dislike/:id', async (req, res) => {
 // }
 // );
 
-router.post('/replies/', async (req, res) => {
+router.post('/comments/:id', async (req, res) => {
     try{
         const { error } = validateReplies(req.body);
         if(error){

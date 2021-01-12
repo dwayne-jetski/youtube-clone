@@ -54,8 +54,8 @@ function BuildComments(props){
                                     <Button size="sm" onClick={props.handleDislikeSubmit()} name="dislikes" id={_id} mainCommentId={commentId} val={dislikes}>Dislikes: {dislikes}</Button>
                             </Col>
                             <Col>
-                                
-                                {DisplayReplyBox(props, commentId)}
+
+                                <DisplayReplyBox commentId={commentId} />
                                 
                             </Col>
                         </Row>

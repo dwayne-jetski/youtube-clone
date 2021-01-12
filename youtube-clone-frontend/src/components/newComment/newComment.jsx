@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 function newComment(props){
 
 
+
     return(
 
         <Form inline className='search-bar col-md-6' onSubmit={props.handleSubmit()}>

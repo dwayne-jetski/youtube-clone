@@ -15,7 +15,9 @@ function VideoPlayer(props){
     return(
         <div>
             <Row>
-                <h1>{props.videoTitle}</h1>
+                <Col>
+                    <h1>{props.videoTitle}</h1>
+                </Col>
             </Row>
             <Row>
                 <Col xs={4}>
@@ -24,6 +26,17 @@ function VideoPlayer(props){
                     <Row>
                     <iframe title={currentlyPlaying} width="560" height="315" src={currentlyPlaying} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                        
+                    </Row>
+                    <Row>
+                        <Row>
+                            <h3>Description</h3>
+                        </Row>
+                        <Row>
+                            
+                        </Row>
+                        <Row>
+                            {props.description}
+                        </Row>
                     </Row>
                     <Col xs={7}>
                         <Row>
