@@ -247,8 +247,6 @@ class App extends React.Component {
 
   }
 
-  
-
   render(){
 
     console.log('viewing home page?: ', this.state.viewingHomePage);
