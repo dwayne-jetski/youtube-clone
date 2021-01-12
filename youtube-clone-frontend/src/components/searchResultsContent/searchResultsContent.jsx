@@ -6,7 +6,7 @@ import Img from 'react-bootstrap/Image'
 
 const createSearchResults = (props)=>{
 
-    
+
     
     let results = props.collection.map((collection, index)=>{
 

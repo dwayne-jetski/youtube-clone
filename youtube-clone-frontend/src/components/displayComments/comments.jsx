@@ -4,30 +4,28 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 import axios from 'axios';
+import DisplayReplyBox from '../displayReplyBox/displayReplyBox'
+
 
 
 
 
 function BuildComments(props){
 
-    const [comments, setComments] = useState(null); 
-    const [count, setCount] = useState(0);
 
-  
+    console.log('props.commentData: ', props.commentData);
 
-    if(comments === null){
-        axios.get('http://localhost:5000/api/comments/' + props.selectedVideo).then(response=>{
-            console.log('RESPONSE: ', response)
-            setComments(response);
-        }).catch((ex)=>{console.log(ex)});
+    const [reply, setReply] = useState(false);
+
+    let commentSection;
+ 
+    if(props.commentData === null){
+    commentSection = [<div>Loading...</div>];
     }
-
-    
-    let commentSection = [<div>Loading...</div>];
-
-    if(comments !== null){ 
-        console.log('Hook Comment Data: ', comments.data)
-        commentSection = comments.data.map((commentList, index, commentId)=>{
+    else if (props.commentData !== null){ 
+        
+        console.log('Hook Comment Data: ', props.commentData)
+        commentSection = props.commentData.map((commentList, index, commentId)=>{
         
         const { _id, videoId,  likes, dislikes, text, replies, postDate } = commentList
         console.log('COMMENT ID: ', _id)
@@ -53,9 +51,13 @@ function BuildComments(props){
                                     <Button size="sm" onClick={props.handleDislikeSubmit()} name="dislikes" id={_id} val={dislikes}>Dislikes: {dislikes}</Button>
                             </Col>
                             <Col>
-                                <Button size="sm" onClick=/* funciton to display a new comment*/"" >
+                                <Button size="sm"  /* onClick={()=>handleReply()} */>
                                     Reply
                                 </Button>
+                                <Row>
+                                    {DisplayReplyBox(reply, props)}
+                                </Row>
+                                
                             </Col>
                         </Row>
                         <Row>
@@ -75,6 +77,7 @@ function BuildComments(props){
         });
   
     }
+
 
     
     return(

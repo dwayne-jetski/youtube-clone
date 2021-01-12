@@ -24,22 +24,38 @@ class App extends React.Component {
       selectedVideo: '',
       selectedVideoTitle: '',
       relatedVideo: ``,
-      comments: [],
+      comments: null,
+      mostRecentComments: [],
       newCommentBody: '',
       likes: 0,
       dislikes: 0,
       commentId: '',
-      count: 0
+      count: 0,
 
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.selectVideo = this.selectVideo.bind(this);
+    this.selectVideo = this.selectVideo.bind();
     this.returnHome = this.returnHome.bind(this);
     this.handleCommentSubmit = this.handleCommentSubmit.bind(this);
     this.handleDislikeSubmit = this.handleDislikeSubmit.bind(this);
     this.handleLikeSubmit = this.handleLikeSubmit.bind(this);
     
+    
+    
+  }
+
+  setComments(selectedVideo){
+
+    console.log("Video ID in SetComments(): ", selectedVideo)
+    
+      axios.get('http://localhost:5000/api/comments/' + selectedVideo).then(response=>{
+        console.log('RESPONSE: ', response);
+        this.setState({
+          comments: response.data,
+          mostRecentComments: response.data
+        });
+    }).catch((ex)=>{console.log(ex)});
   }
 
   selectVideo = async (event)=>{
@@ -49,12 +65,16 @@ class App extends React.Component {
     let id = event.target.id;
     let title = event.target.title;
     console.log('HERE IS THE TITLE OF THE VIDEO!: ', title)
+    
+    console.log("Video ID Going Into SetComments(): ", id)
+    this.setComments(id);
+
     const response = await youtube.get('search', {
       params: {
         part: 'snippet',
         maxResults: 15,
         relatedVideo: null,
-        key: 'AIzaSyBeQWXnaQFOD6biPec4eTykezcr60IrZGc',
+        key: 'AIzaSyDPFtKRXuxscC8cjE1JQucpp6CdTil-J88',
         
       }
     });
@@ -68,7 +88,8 @@ class App extends React.Component {
       selectedVideoTitle: title
       
     })
-
+   
+    event.target.value = '';
     
   }
 
@@ -88,9 +109,11 @@ class App extends React.Component {
       newCommentBody: '',
       likes: 0,
       dislikes: 0,
-      commentId: ''
+      commentId: '',
+      loadComments: false
     })
   }
+
 
 
 
@@ -101,6 +124,7 @@ class App extends React.Component {
     this.setState({[nam]: val});
 
   }
+
 
   handleDislikeSubmit = async (event)=>{
     event.preventDefault();
@@ -114,51 +138,53 @@ class App extends React.Component {
     })
 
     
-    const param = {
-      dislikes: val
-    };
-
-    console.log('handleRequest, commentId: http://localhost:5000/api/dislike/', currentCommentId);
+    console.log('handleRequest, commentId: http://localhost:5000/api/like/', currentCommentId);
     axios.get('http://localhost:5000/api/comments/dislike/' + currentCommentId)
     .then(response =>{
-      console.log("This is the response David wants to see: ",response)
+      console.log("This is the response David wants to see: ", response)
       this.setState({
-        likes: 0
-      })
-    })
+        dislikeslikes: 0,
+        selectedVideo: this.state.selectedVideo
+      });
+    });
 
+    let selectedVideo = this.state.selectedVideo;
+    
+    console.log('handle request')
+
+    this.setComments(selectedVideo);
+
+  
   }
 
   handleLikeSubmit = async (event) =>{
     event.preventDefault();
 
-    /* let nam = event.target.name;
+    let nam = event.target.name;
     let val = event.target.value + 1;
+    let currentCommentId = event.target.id;
     this.setState({
       [nam]: val,
       commentId: currentCommentId,
     })
-    
-    
-    const param = {
-      likes: val
-    };
-     */
 
 
-    let currentCommentId = event.target.id;
+    
     console.log('handleRequest, commentId: http://localhost:5000/api/like/', currentCommentId);
     axios.get('http://localhost:5000/api/comments/like/' + currentCommentId)
     .then(response =>{
-      console.log("This is the response David wants to see: ",response)
+      console.log("This is the response David wants to see: ", response)
       this.setState({
         likes: 0,
         selectedVideo: this.state.selectedVideo
       });
     });
 
+    let selectedVideo = this.state.selectedVideo;
     
     console.log('handle request')
+
+    this.setComments(selectedVideo);
     
   }
 
@@ -193,7 +219,7 @@ class App extends React.Component {
       params: {
         part: 'snippet',
         maxResults: 15,
-        key: 'AIzaSyBeQWXnaQFOD6biPec4eTykezcr60IrZGc',
+        key: 'AIzaSyAhGU97XdEWIwuXNYYe5DPGNdrNDtcQ7ss',
         q: this.state.searchBarVal
       }
     });
@@ -229,6 +255,9 @@ class App extends React.Component {
     console.log('Dislikes: ', this.state.dislikes);
     console.log('Likes: ', this.state.likes);
     console.log('APP.JS Comment ID: ', this.state.commentId);
+    console.log('---------------next state-----------------------')
+
+    
 
     if(this.state.viewingHomePage === true && this.state.viewingSearchResults === false && this.state.viewingVideoPlayer === false){
       return(
@@ -252,16 +281,20 @@ class App extends React.Component {
           searchResult={this.state.searchBarVal} 
           collection={this.state.searchCollection}
           searchingFor={this.state.searchBarVal}
-          selectAVideo = {()=>this.selectVideo}/>
+          selectAVideo = {()=>this.selectVideo}
+          commentData = {this.state.comments}
+          />
         </React.Fragment>
       )
     } else if(this.state.viewingHomePage === false && this.state.viewingSearchResults === false && this.state.viewingVideoPlayer === true){
+
       return(
         <React.Fragment>
           <NavBar 
           handleSearchbarChange={()=> this.handleChange} 
           handleSearch={()=>this.handleSubmit}
           returnHome={()=> this.returnHome}/>
+          
           <VideoPlayer 
           count={this.state.count}
           videoTitle={this.state.selectedVideoTitle}
@@ -270,12 +303,13 @@ class App extends React.Component {
           searchingFor={this.state.searchBarVal}
           selectAVideo = {()=>this.selectVideo} 
           selectedVideo={this.state.selectedVideo}
-          comments = {this.state.comments}
+          commentData = {this.state.comments}
           newCommentBody = {this.state.newCommentBody}
           handleCommentChange={()=> this.handleChange} 
           handleSubmit={()=>this.handleCommentSubmit}
           handleDislikeSubmit = {()=>this.handleDislikeSubmit}
           handleLikeSubmit = {()=>this.handleLikeSubmit}
+          setComments = {()=>this.setComments()}
           />
         </React.Fragment>
       )

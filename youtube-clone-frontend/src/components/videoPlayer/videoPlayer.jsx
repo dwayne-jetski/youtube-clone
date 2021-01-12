@@ -10,6 +10,8 @@ function VideoPlayer(props){
 
     const currentlyPlaying = `https://www.youtube.com/embed/${props.selectedVideo}`
 
+    console.log('VideoPlayer props.CommentData: ', props.commentData)
+
     return(
         <div>
             <Row>
@@ -38,6 +40,7 @@ function VideoPlayer(props){
                             <Col>
                                 <Row>
                                     <BuildComments 
+                                    commentData = {props.commentData}
                                     selectedVideo={props.selectedVideo} 
                                     handleLikeSubmit={props.handleLikeSubmit} 
                                     handleDislikeSubmit={props.handleDislikeSubmit} />
