@@ -11,10 +11,10 @@ function HomePageContent(props){
 
     return(
         <Row>
-            <Col>
-            <h3>Test</h3>
+            <Col xs={4}>
+            
             </Col>
-            <Col xs={8}>
+            <Col xs={6}>
                 <Row>
                     <Row>
                         <Col>
@@ -23,76 +23,15 @@ function HomePageContent(props){
                     </Row>
                 </Row>
                 <Row>
-                    
                     <Row>
                         <Col>
-                            {/* Video goes here */}
+                            <h1>Search For A Video</h1>
                         </Col>
-                        <Col>
-                            {/* Video goes here */}
-                        </Col>
-                        <Col>
-                            {/* Video goes here */}
-                        </Col>
-                        <Col>
-                            {/* Video goes here */}
-                        </Col>
-
-                    </Row>
-                </Row>
-                <Row>
-                    <Row>
-                        <Col>
-                            <h1>Recommended Content</h1>
-                        </Col>
-                    </Row>
-                </Row>
-                <Row>
-                    
-                    <Row>
-                        <Col>
-                            {/* Video goes here */}
-                        </Col>
-                        <Col>
-                            {/* Video goes here */}
-                        </Col>
-                        <Col>
-                            {/* Video goes here */}
-                        </Col>
-                        <Col>
-                            {/* Video goes here */}
-                        </Col>
-
-                    </Row>
-                </Row>
-                <Row>
-                    <Row>
-                        <Col>
-                            <h1>Recommended Content</h1>
-                        </Col>
-                    </Row>
-                </Row>
-                <Row>
-                    
-                    <Row>
-                        <Col>
-                            {/* Video goes here */}  
-                        </Col>
-                        <Col>
-                            {/* Video goes here */}
-                        </Col>
-                        <Col>
-                            {/* Video goes here */}
-                        </Col>
-                        <Col>
-                            {/* Video goes here */}
-                        </Col>
-
                     </Row>
                 </Row>
             </Col>
             <Col>
-                <h3>Test</h3>
+                
             </Col>
 
         </Row>

@@ -40,6 +40,7 @@ function VideoPlayer(props){
                             <Col>
                                 <Row>
                                     <BuildComments 
+                                    handleSubmit = {props.handleSubmit}
                                     commentData = {props.commentData}
                                     selectedVideo={props.selectedVideo} 
                                     handleLikeSubmit={props.handleLikeSubmit} 

@@ -1,21 +1,46 @@
-import React from 'react'
-import newComment from '../newComment/newComment'
-import Row from 'react-bootstrap/Row'
+import React, { useState } from 'react';
+import newComment from '../newComment/newComment';
+import Row from 'react-bootstrap/Row';
+import Button from 'react-bootstrap/Button'
 
 
 
-function DisplayReplyBox(reply ,props){
+function DisplayReplyBox(props, commentId){
+    const [reply, setReply] = useState(false); 
+
+    function handleReply (event, reply){
+    
+        if(reply === false){
+            setReply(true)
+        }else if (reply === true) {
+            setReply(false);
+        }
+    }
 
 
-    if(reply === false){
+
+    if(reply=== false){
         return(
-            <p></p>
+            <div>
+                <Button size="sm" id={commentId} onClick={()=>handleReply(reply)}>
+                    Reply
+                </Button>
+                <Row>
+                
+                </Row>
+            </div>
         )
     } else {
         return(
-            <Row>
-                {newComment(props)}
-            </Row>
+            
+            <div>
+                <Button size="sm" id={commentId} onClick={()=>handleReply(reply)}>
+                        Reply
+                </Button>
+                <Row>
+                    {newComment(props)}
+                </Row>
+            </div>
         )
     }
 }

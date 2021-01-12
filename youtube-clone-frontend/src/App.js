@@ -31,6 +31,7 @@ class App extends React.Component {
       dislikes: 0,
       commentId: '',
       count: 0,
+      reply: false
 
     }
     this.handleChange = this.handleChange.bind(this);
@@ -41,11 +42,9 @@ class App extends React.Component {
     this.handleDislikeSubmit = this.handleDislikeSubmit.bind(this);
     this.handleLikeSubmit = this.handleLikeSubmit.bind(this);
     
-    
-    
   }
 
-  setComments(selectedVideo){
+  setComments= async (selectedVideo)=>{
 
     console.log("Video ID in SetComments(): ", selectedVideo)
     
@@ -114,9 +113,6 @@ class App extends React.Component {
     })
   }
 
-
-
-
   handleChange(event){
       
     let nam = event.target.name;
@@ -124,7 +120,6 @@ class App extends React.Component {
     this.setState({[nam]: val});
 
   }
-
 
   handleDislikeSubmit = async (event)=>{
     event.preventDefault();
@@ -202,6 +197,12 @@ class App extends React.Component {
       console.log(res);
     });
 
+    this.setState({newCommentBody: ''})
+
+    let selectedVideo = this.state.selectedVideo;
+    this.setComments(selectedVideo);
+    
+
   }
 
   handleSubmit = async (event)=>{
@@ -237,6 +238,8 @@ class App extends React.Component {
     console.log(response);
 
   }
+
+  
 
   render(){
 
